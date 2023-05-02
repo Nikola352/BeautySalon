@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 
+import ui.CosmetologistCLI;
 import utils.AppSettings;
 
 public class Cosmetologist extends Employee {
@@ -78,5 +79,11 @@ public class Cosmetologist extends Employee {
             Double.toString(getSalary()),
             treatmentTypesString
         };
+    }
+
+    @Override
+    public boolean showCLI(){
+        CosmetologistCLI CosmetologistCLI = new CosmetologistCLI(this);
+        return CosmetologistCLI.run();
     }
 }

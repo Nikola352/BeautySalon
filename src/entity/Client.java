@@ -1,5 +1,7 @@
 package entity;
 
+import ui.ClientCLI;
+
 public class Client extends User {
     private double totalSpent;
     private boolean hasLoyaltyCard;
@@ -68,5 +70,11 @@ public class Client extends User {
             String.valueOf(getTotalSpent()),
             String.valueOf(getHasLoyaltyCard())
         };
+    }
+
+    @Override
+    public boolean showCLI(){
+        ClientCLI clientCLI = new ClientCLI(this);
+        return clientCLI.run();
     }
 }

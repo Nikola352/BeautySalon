@@ -139,4 +139,6 @@ public abstract class User implements IdAssignable, CsvConvertible {
     }
 
     abstract public String[] toCsv();
+
+    abstract public boolean showCLI();
 }

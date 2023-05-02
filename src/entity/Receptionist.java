@@ -1,5 +1,7 @@
 package entity;
 
+import ui.ReceptionistCLI;
+
 public class Receptionist extends Employee {
     public Receptionist() {
         super();
@@ -48,5 +50,11 @@ public class Receptionist extends Employee {
             String.valueOf(getBonus()),
             String.valueOf(getSalary())
         };
+    }
+
+    @Override
+    public boolean showCLI(){
+        ReceptionistCLI receptionistCLI = new ReceptionistCLI(this);
+        return receptionistCLI.run();
     }
 }

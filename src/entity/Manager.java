@@ -1,5 +1,7 @@
 package entity;
 
+import ui.ManagerCLI;
+
 public class Manager extends Employee {
     public Manager() {
         super();
@@ -43,5 +45,11 @@ public class Manager extends Employee {
             String.valueOf(getBonus()),
             String.valueOf(getSalary())
         };
+    }
+    
+    @Override
+    public boolean showCLI(){
+        ManagerCLI managerCLI = new ManagerCLI(this);
+        return managerCLI.run();
     }
 }
