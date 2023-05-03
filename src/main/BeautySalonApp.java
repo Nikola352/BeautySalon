@@ -6,9 +6,9 @@ import ui.LoginCLI;
 
 public class BeautySalonApp {
     private User currentUser;
+    ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
 
     public BeautySalonApp() {
-        ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
         serviceRegistry.loadData();
     }
 
@@ -23,6 +23,7 @@ public class BeautySalonApp {
 
     public void exit(){
         System.out.println("Bye!");
+        serviceRegistry.saveData();
     }
 
     public void run() {

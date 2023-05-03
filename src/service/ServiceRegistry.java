@@ -13,9 +13,7 @@ public class ServiceRegistry {
     private ManagerService managerService;
     private AppointmentService appointmentService;
 
-    private ServiceRegistry() {
-        
-    }
+    private ServiceRegistry() {}
 
     public static ServiceRegistry getInstance() {
         if(instance == null) {
@@ -89,5 +87,17 @@ public class ServiceRegistry {
         receptionistService.loadData();
         managerService.loadData();
         appointmentService.loadData();
+    }
+
+    public void saveData(){
+        beautySalonService.saveBeautySalon();
+        treatmentTypeService.saveData();
+        cosmeticTreatmentService.saveData();
+        priceListService.savePriceList();
+        clientService.saveData();
+        cosmetologistService.saveData();
+        receptionistService.saveData();
+        managerService.saveData();
+        appointmentService.saveData();
     }
 }
