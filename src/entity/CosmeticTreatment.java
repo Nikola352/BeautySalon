@@ -4,16 +4,15 @@ public class CosmeticTreatment implements IdAssignable, CsvConvertible {
     private int id;
     private String name;
     private TreatmentType treatmentType;
-    private double price;
+    // private double price;
     private int duration; // in minutes
 
     public CosmeticTreatment() {}
 
-    public CosmeticTreatment(int id, String name, TreatmentType treatmentType, double price, int duration){
+    public CosmeticTreatment(int id, String name, TreatmentType treatmentType, int duration){
         setId(id);
         setName(name);
         setTreatmentType(treatmentType);
-        setPrice(price);
         setDuration(duration);
     }
 
@@ -43,14 +42,14 @@ public class CosmeticTreatment implements IdAssignable, CsvConvertible {
         this.treatmentType = treatmentType;
     }
 
-    public double getPrice() {
-        return this.price;
-    }
+    // public double getPrice() {
+    //     return this.price;
+    // }
 
-    public void setPrice(double price) {
-        if(price < 0) throw new IllegalArgumentException("Price cannot be negative");
-        this.price = price;
-    }
+    // public void setPrice(double price) {
+    //     if(price < 0) throw new IllegalArgumentException("Price cannot be negative");
+    //     this.price = price;
+    // }
 
     public int getDuration() {
         return this.duration;
@@ -74,8 +73,7 @@ public class CosmeticTreatment implements IdAssignable, CsvConvertible {
             Integer.parseInt(line[0]),
             line[1],
             treatmentType,
-            Double.parseDouble(line[3]),
-            Integer.parseInt(line[4])
+            Integer.parseInt(line[3])
         );
     }
 
@@ -84,7 +82,6 @@ public class CosmeticTreatment implements IdAssignable, CsvConvertible {
             Integer.toString(getId()),
             getName(),
             Integer.toString(getTreatmentType().getId()),
-            Double.toString(getPrice()),
             Integer.toString(getDuration())
         };
     }

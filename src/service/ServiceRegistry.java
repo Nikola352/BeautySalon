@@ -6,6 +6,7 @@ public class ServiceRegistry {
     private BeautySalonService beautySalonService;
     private TreatmentTypeService treatmentTypeService;
     private CosmeticTreatmentService cosmeticTreatmentService;
+    private PriceListService priceListService;
     private ClientService clientService;
     private CosmetologistService cosmetologistService;
     private ReceptionistService receptionistService;
@@ -35,6 +36,10 @@ public class ServiceRegistry {
         return cosmeticTreatmentService;
     }
 
+    public PriceListService getPriceListService() {
+        return priceListService;
+    }
+
     public ClientService getClientService() {
         return clientService;
     }
@@ -62,6 +67,8 @@ public class ServiceRegistry {
             treatmentTypeService = new TreatmentTypeService();
         if(cosmeticTreatmentService == null)
             cosmeticTreatmentService = new CosmeticTreatmentService();
+        if(priceListService == null)
+            priceListService = new PriceListService();
         if(clientService == null)
             clientService = new ClientService();
         if(cosmetologistService == null)
@@ -76,6 +83,7 @@ public class ServiceRegistry {
         beautySalonService.loadBeautySalon();
         treatmentTypeService.loadData();
         cosmeticTreatmentService.loadData();
+        priceListService.loadPriceList();
         clientService.loadData();
         cosmetologistService.loadData();
         receptionistService.loadData();

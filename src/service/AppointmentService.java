@@ -17,6 +17,7 @@ public class AppointmentService extends Service<Appointment> {
     private CosmetologistService cosmetologistService;
     private CosmeticTreatmentService cosmeticTreatmentService;
     private BeautySalonService beautySalonService;
+    private PriceListService priceListService;
 
     public AppointmentService() {
         ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
@@ -24,6 +25,7 @@ public class AppointmentService extends Service<Appointment> {
         cosmetologistService = serviceRegistry.getCosmetologistService();
         cosmeticTreatmentService = serviceRegistry.getCosmeticTreatmentService();
         beautySalonService = serviceRegistry.getBeautySalonService();
+        priceListService = serviceRegistry.getPriceListService();
     }
 
     public Appointment add(CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate data, LocalTime time, double price, CosmeticTreatmentStatus status){
@@ -35,7 +37,7 @@ public class AppointmentService extends Service<Appointment> {
 
     public Appointment add(CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate date, LocalTime time){
         double discount = beautySalonService.getBeautySalon().getLoyaltyCardDiscount();
-        double price = Appointment.calculatePrice(cosmeticTreatment, client, discount);
+        double price = Appointment.calculatePrice(priceListService.getPrice(cosmeticTreatment.getId()), client, discount);
         return add(cosmeticTreatment, cosmetologist, client, date, time, price, CosmeticTreatmentStatus.SCHEDULED);
     }
 
@@ -49,9 +51,9 @@ public class AppointmentService extends Service<Appointment> {
         try{
             ArrayList<String[]> appointmentStrings = CsvUtil.loadData(getFilename(), appSettings.getDelimiter());
             for(String[] appointmentString : appointmentStrings) {
-                CosmeticTreatment cosmeticTreatment = cosmeticTreatmentService.getById(Integer.parseInt(appointmentString[2]));
+                CosmeticTreatment cosmeticTreatment = cosmeticTreatmentService.getById(Integer.parseInt(appointmentString[1]));
+                Cosmetologist cosmetologist = cosmetologistService.getById(Integer.parseInt(appointmentString[2]));
                 Client client = clientService.getById(Integer.parseInt(appointmentString[3]));
-                Cosmetologist cosmetologist = cosmetologistService.getById(Integer.parseInt(appointmentString[4]));
                 Appointment scheduledCosmeticTreatment = Appointment.parseFromCsv(appointmentString, cosmeticTreatment, cosmetologist, client);
                 add(scheduledCosmeticTreatment);
             }

@@ -8,13 +8,8 @@ import utils.AppSettings;
 import utils.CsvUtil;
 
 public class BeautySalonService {
-    private BeautySalon beautySalon;
-    private AppSettings appSettings;
-
-    public BeautySalonService() {
-        beautySalon = new BeautySalon();
-        appSettings = AppSettings.getInstance();
-    }
+    private BeautySalon beautySalon = new BeautySalon();
+    private AppSettings appSettings = AppSettings.getInstance();
     
     public BeautySalon getBeautySalon() {
         return this.beautySalon;

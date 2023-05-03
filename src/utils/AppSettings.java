@@ -9,6 +9,7 @@ public class AppSettings {
     private String cosmetologistFilename;
     private String managerFilename;
     private String beautySalonFilename;
+    private String priceListFilename;
 
     private String delimiter;
     private String innerDelimiter;
@@ -22,6 +23,7 @@ public class AppSettings {
         setCosmetologistFilename("data/cosmetologists.csv");
         setManagerFilename("data/managers.csv");
         setBeautySalonFilename("data/beauty_salon.csv");
+        setPriceListFilename("data/price_list.csv");
 
         setDelimiter(";");
         setInnerDelimiter(",");
@@ -76,6 +78,10 @@ public class AppSettings {
         return this.beautySalonFilename;
     }
 
+    public String getPriceListFilename() {
+        return this.priceListFilename;
+    }
+
     // setters are private unitl I see a need to change them
     private void setTreatmentTypeFilename(String treatmentTypeFilename) {
         this.treatmentTypeFilename = treatmentTypeFilename;
@@ -115,5 +121,9 @@ public class AppSettings {
 
     private void setBeautySalonFilename(String beautySalonFilename) {
         this.beautySalonFilename = beautySalonFilename;
+    }
+
+    private void setPriceListFilename(String priceListFilename) {
+        this.priceListFilename = priceListFilename;
     }
 }

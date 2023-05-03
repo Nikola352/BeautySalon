@@ -90,11 +90,11 @@ public class Appointment implements IdAssignable, CsvConvertible {
         this.status = status;
     }
 
-    public static double calculatePrice(CosmeticTreatment cosmeticTreatment, Client client, double discount){
+    public static double calculatePrice(double price, Client client, double discount){
         if(client.isHasLoyaltyCard()){
-            return cosmeticTreatment.getPrice() * (1 - discount);
+            return price * (1 - discount);
         } else {
-            return cosmeticTreatment.getPrice();
+            return price;
         }
     }
 
