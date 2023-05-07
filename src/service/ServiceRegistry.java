@@ -100,4 +100,16 @@ public class ServiceRegistry {
         managerService.saveData();
         appointmentService.saveData();
     }
+
+    public void clearData(){
+        priceListService.getPriceList().getPriceList().clear();
+        treatmentTypeService.getData().clear();
+        cosmeticTreatmentService.getData().clear();
+        clientService.getData().clear();
+        cosmetologistService.getData().clear();
+        receptionistService.getData().clear();
+        managerService.getData().clear();
+        appointmentService.getData().clear();
+        this.saveData();
+    }
 }
