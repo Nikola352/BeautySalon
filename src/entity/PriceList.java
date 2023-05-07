@@ -49,7 +49,7 @@ public class PriceList implements CsvConvertible {
     @Override
     public String[] toCsv(){
         String[] priceListString = new String[priceList.size()];
-        int i = 1;
+        int i = 0;
         for(int treatmentId : priceList.keySet()){
             priceListString[i] = treatmentId + AppSettings.getInstance().getInnerDelimiter() + priceList.get(treatmentId);
             i++;

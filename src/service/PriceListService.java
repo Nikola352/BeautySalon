@@ -33,7 +33,12 @@ public class PriceListService {
 
     public void loadPriceList(){
         try{
-            String[] priceListString = CsvUtil.loadData(appSettings.getPriceListFilename(), appSettings.getDelimiter()).get(0);
+            ArrayList<String[]> priceListCsv = CsvUtil.loadData(appSettings.getPriceListFilename(), appSettings.getDelimiter());
+            String[] priceListString;
+            if(priceListCsv.isEmpty())
+                priceListString = new String[0];
+            else
+                priceListString = priceListCsv.get(0);
             priceList = PriceList.parseFromCsv(priceListString);
         } catch(IOException e) {
             System.err.println("Error loading price list");

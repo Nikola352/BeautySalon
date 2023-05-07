@@ -4,9 +4,9 @@ public class ServiceRegistry {
     private static ServiceRegistry instance;
 
     private BeautySalonService beautySalonService;
+    private PriceListService priceListService;
     private TreatmentTypeService treatmentTypeService;
     private CosmeticTreatmentService cosmeticTreatmentService;
-    private PriceListService priceListService;
     private ClientService clientService;
     private CosmetologistService cosmetologistService;
     private ReceptionistService receptionistService;
@@ -61,12 +61,12 @@ public class ServiceRegistry {
     public void loadData(){
         if(beautySalonService == null)
             beautySalonService = new BeautySalonService();
+        if(priceListService == null)
+            priceListService = new PriceListService();
         if(treatmentTypeService == null)
             treatmentTypeService = new TreatmentTypeService();
         if(cosmeticTreatmentService == null)
             cosmeticTreatmentService = new CosmeticTreatmentService();
-        if(priceListService == null)
-            priceListService = new PriceListService();
         if(clientService == null)
             clientService = new ClientService();
         if(cosmetologistService == null)
@@ -91,9 +91,9 @@ public class ServiceRegistry {
 
     public void saveData(){
         beautySalonService.saveBeautySalon();
+        priceListService.savePriceList();
         treatmentTypeService.saveData();
         cosmeticTreatmentService.saveData();
-        priceListService.savePriceList();
         clientService.saveData();
         cosmetologistService.saveData();
         receptionistService.saveData();
