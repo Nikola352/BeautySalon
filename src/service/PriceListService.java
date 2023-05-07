@@ -40,11 +40,10 @@ public class PriceListService {
         try{
             ArrayList<String[]> priceListCsv = CsvUtil.loadData(appSettings.getPriceListFilename(), appSettings.getDelimiter());
             String[] priceListString;
-            if(priceListCsv.isEmpty())
-                priceListString = new String[0];
-            else
+            if(!priceListCsv.isEmpty() && priceListCsv.get(0).length > 0 && !priceListCsv.get(0)[0].equals("")){
                 priceListString = priceListCsv.get(0);
-            priceList = PriceList.parseFromCsv(priceListString);
+                priceList = PriceList.parseFromCsv(priceListString);
+            }
         } catch(IOException e) {
             System.err.println("Error loading price list");
         }
