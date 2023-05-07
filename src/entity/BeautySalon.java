@@ -1,6 +1,16 @@
 package entity;
 
+import java.util.ArrayList;
+
+import utils.AppSettings;
+
 public class BeautySalon implements CsvConvertible {
+    private String name;
+
+    private int openingHour;
+    private int closingHour;
+    private ArrayList<DayOfWeek> workingDays;
+
     private double totalIncome;
     private double totalExpenses;
     private double totalProfit;
@@ -15,7 +25,11 @@ public class BeautySalon implements CsvConvertible {
 
     public BeautySalon() {}
 
-    public BeautySalon(double totalIncome, double totalExpenses, double totalProfit, int bonusThreashold, double bonusValue, double loyaltyCardDiscount, double loyaltyCardThreshold){
+    public BeautySalon(String name, int openingHour, int closingHour, ArrayList<DayOfWeek> workingDays,  double totalIncome, double totalExpenses, double totalProfit, int bonusThreashold, double bonusValue, double loyaltyCardDiscount, double loyaltyCardThreshold){
+        setName(name);
+        setOpeningHour(openingHour);
+        setClosingHour(closingHour);
+        setWorkingDays(workingDays);
         setTotalIncome(totalIncome);
         setTotalExpenses(totalExpenses);
         setTotalProfit(totalProfit);
@@ -23,6 +37,54 @@ public class BeautySalon implements CsvConvertible {
         setBonusAmount(bonusValue);
         setLoyaltyCardDiscount(loyaltyCardDiscount);
         setLoyaltyCardThreshold(loyaltyCardThreshold);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getOpeningHour() {
+        return this.openingHour;
+    }
+
+    public void setOpeningHour(int openingHour) {
+        this.openingHour = openingHour;
+    }
+
+    public int getClosingHour() {
+        return this.closingHour;
+    }
+
+    public void setClosingHour(int closingHour) {
+        this.closingHour = closingHour;
+    }
+
+    public ArrayList<DayOfWeek> getWorkingDays() {
+        return this.workingDays;
+    }
+
+    public void setWorkingDays(ArrayList<DayOfWeek> workingDays) {
+        this.workingDays = workingDays;
+    }
+
+    public void addWorkingDay(DayOfWeek day){
+        this.workingDays.add(day);
+    }
+
+    public void removeWorkingDay(DayOfWeek day){
+        this.workingDays.remove(day);
+    }
+
+    public DayOfWeek getOpeningDay() {
+        return this.workingDays.get(0);
+    }
+
+    public DayOfWeek getClosingDay() {
+        return this.workingDays.get(this.workingDays.size() - 1);
     }
 
     public double getTotalIncome() {
@@ -95,26 +157,47 @@ public class BeautySalon implements CsvConvertible {
     }
 
     public static BeautySalon parseFromCsv(String[] line){
+        String[] workingDaysStrings = line[3].split(AppSettings.getInstance().getInnerDelimiter());
+        ArrayList<DayOfWeek> workingDays = new ArrayList<DayOfWeek>();
+        for(String day : workingDaysStrings){
+            workingDays.add(DayOfWeek.valueOf(day));
+        }
+
         return new BeautySalon(
-            Double.parseDouble(line[0]),
-            Double.parseDouble(line[1]),
-            Double.parseDouble(line[2]),
-            Integer.parseInt(line[3]),
+            line[0],
+            Integer.parseInt(line[1]),
+            Integer.parseInt(line[2]),
+            workingDays,
             Double.parseDouble(line[4]),
             Double.parseDouble(line[5]),
-            Double.parseDouble(line[6])
+            Double.parseDouble(line[6]),
+            Integer.parseInt(line[7]),
+            Double.parseDouble(line[8]),
+            Double.parseDouble(line[9]),
+            Double.parseDouble(line[10])
         );
     }
 
     public String[] toCsv(){
+        StringBuilder sb = new StringBuilder();
+        for(DayOfWeek day : getWorkingDays()){
+            sb.append(day.toString());
+            sb.append(AppSettings.getInstance().getInnerDelimiter());
+        }
+        sb.deleteCharAt(sb.length() - 1); // remove last delimiter (,)
+
         return new String[]{
-            String.valueOf(getTotalIncome()),
-            String.valueOf(getTotalExpenses()),
-            String.valueOf(getTotalProfit()),
-            String.valueOf(getBonusThreashold()),
-            String.valueOf(getBonusAmount()),
-            String.valueOf(getLoyaltyCardDiscount()),
-            String.valueOf(getLoyaltyCardThreshold())
+            getName(),
+            Integer.toString(getOpeningHour()),
+            Integer.toString(getClosingHour()),
+            sb.toString(),
+            Double.toString(getTotalIncome()),
+            Double.toString(getTotalExpenses()),
+            Double.toString(getTotalProfit()),
+            Integer.toString(getBonusThreashold()),
+            Double.toString(getBonusAmount()),
+            Double.toString(getLoyaltyCardDiscount()),
+            Double.toString(getLoyaltyCardThreshold())
         };
     }
 
