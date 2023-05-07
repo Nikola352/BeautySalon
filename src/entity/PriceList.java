@@ -39,7 +39,7 @@ public class PriceList implements CsvConvertible {
 
     public static PriceList parseFromCsv(String[] line){
         HashMap<Integer, Double> priceList = new HashMap<Integer, Double>();
-        for(int i = 1; i < line.length; i++){
+        for(int i = 0; i < line.length; i++){
             String[] price = line[i].split(AppSettings.getInstance().getInnerDelimiter());
             priceList.put(Integer.parseInt(price[0]), Double.parseDouble(price[1]));
         }
