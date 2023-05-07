@@ -32,7 +32,7 @@ public abstract class Employee extends User {
         setYearsOfExperience(yearsOfExperience);
         setBaseSalary(baseSalary);
         setBonus(bonus);
-        setSalary(calculateSalary());
+        calculateSalary();
     }
 
 

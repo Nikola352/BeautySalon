@@ -11,6 +11,10 @@ public class Manager extends Employee {
         super(id, username, password, name, lastname, gender, phoneNum, address, levelOfEducation, yearsOfExperience, baseSalary, bonus, salary);
     }
 
+    public Manager(int id, String username, String password, String name, String lastname, Gender gender, String phoneNum, String address, LevelOfEducation levelOfEducation, int yearsOfExperience, double baseSalary, double bonus){
+        super(id, username, password, name, lastname, gender, phoneNum, address, levelOfEducation, yearsOfExperience, baseSalary, bonus);
+    }
+
     public static Manager parseFromCsv(String[] line){
         return new Manager(
             Integer.parseInt(line[0]),

@@ -3,6 +3,7 @@ package service;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import entity.CosmeticTreatment;
 import entity.PriceList;
 import utils.AppSettings;
 import utils.CsvUtil;
@@ -25,6 +26,10 @@ public class PriceListService {
 
     public double getPrice(int id){
         return priceList.getPrice(id);
+    }
+
+    public double getPrice(CosmeticTreatment cosmeticTreatment){
+        return priceList.getPrice(cosmeticTreatment.getId());
     }
 
     public void update(int id, double price){

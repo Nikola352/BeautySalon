@@ -9,16 +9,18 @@ import entity.Receptionist;
 import utils.CsvUtil;
 
 public class ReceptionistService extends Service<Receptionist> {
-    public void add(String username, String password, String name, String lastname, Gender gender, String phoneNum, String address, LevelOfEducation levelOfEducation, int yearsOfExperience, double baseSalary, double bonus, double salary){
+    public Receptionist add(String username, String password, String name, String lastname, Gender gender, String phoneNum, String address, LevelOfEducation levelOfEducation, int yearsOfExperience, double baseSalary, double bonus, double salary){
         Receptionist receptionist = new Receptionist(getNextId(), username, password, name, lastname, gender, phoneNum, address, levelOfEducation, yearsOfExperience, baseSalary, bonus, salary);
         add(receptionist);
         incrementNextId();
+        return receptionist;
     }
 
-    public void add(String username, String password, String name, String lastname, Gender gender, String phoneNum, String address, LevelOfEducation levelOfEducation, int yearsOfExperience, double baseSalary){
+    public Receptionist add(String username, String password, String name, String lastname, Gender gender, String phoneNum, String address, LevelOfEducation levelOfEducation, int yearsOfExperience, double baseSalary){
         Receptionist receptionist = new Receptionist(getNextId(), username, password, name, lastname, gender, phoneNum, address, levelOfEducation, yearsOfExperience, baseSalary, 0.0);
         add(receptionist);
         incrementNextId();
+        return receptionist;
     }
 
     public Receptionist getByUsername(String username) {

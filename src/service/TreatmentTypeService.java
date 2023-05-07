@@ -7,10 +7,29 @@ import entity.TreatmentType;
 import utils.CsvUtil;
 
 public class TreatmentTypeService extends Service<TreatmentType> {
-    public void addTreatmentType(String name, String description) {
+    public TreatmentType add(String name, String description) {
         TreatmentType treatmentType = new TreatmentType(getNextId(), name, description);
         add(treatmentType);
         incrementNextId();
+        return treatmentType;
+    }
+
+    public TreatmentType getByName(String name) {
+        for (TreatmentType treatmentType : getData()) {
+            if (treatmentType.getName().equals(name)) {
+                return treatmentType;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void remove(TreatmentType treatmentType) {
+        super.remove(treatmentType);
+        CosmeticTreatmentService cosmeticTreatmentService = ServiceRegistry.getInstance().getCosmeticTreatmentService();
+        if(cosmeticTreatmentService != null) {
+            cosmeticTreatmentService.removeByTreatmentType(treatmentType);
+        }
     }
 
     @Override

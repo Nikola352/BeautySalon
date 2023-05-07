@@ -19,9 +19,23 @@ public class CosmeticTreatmentService extends Service<CosmeticTreatment> {
         return cosmeticTreatment;
     }
 
+    @Override
     public void remove(CosmeticTreatment cosmeticTreatment){
         priceListService.remove(cosmeticTreatment.getId());
         super.remove(cosmeticTreatment);
+        AppointmentService appointmentService = ServiceRegistry.getInstance().getAppointmentService();
+        if(appointmentService != null){
+            appointmentService.removeByCosmeticTreatment(cosmeticTreatment);
+        }
+    }
+
+    public void removeByTreatmentType(TreatmentType treatmentType){
+        ArrayList<CosmeticTreatment> cosmeticTreatments = new ArrayList<CosmeticTreatment>(getData());
+        for(CosmeticTreatment cosmeticTreatment : cosmeticTreatments){
+            if(cosmeticTreatment.getTreatmentType().equals(treatmentType)){
+                remove(cosmeticTreatment);
+            }
+        }
     }
 
     public void update(CosmeticTreatment cosmeticTreatment, String name, TreatmentType treatmentType, double price, int duration){

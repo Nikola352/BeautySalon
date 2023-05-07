@@ -22,6 +22,16 @@ public class Cosmetologist extends Employee {
         setTreatmentTypes(treatmentTypes);
     }
 
+    public Cosmetologist(int id, String username, String password, String name, String lastname, Gender gender, String phoneNum, String address, LevelOfEducation levelOfEducation, int yearsOfExperience, double baseSalary, double bonus){
+        super(id, username, password, name, lastname, gender, phoneNum, address, levelOfEducation, yearsOfExperience, baseSalary, bonus);
+        setTreatmentTypes(new ArrayList<TreatmentType>());
+    }
+
+    public Cosmetologist(int id, String username, String password, String name, String lastname, Gender gender, String phoneNum, String address, LevelOfEducation levelOfEducation, int yearsOfExperience, double baseSalary, double bonus, ArrayList<TreatmentType> treatmentTypes){
+        super(id, username, password, name, lastname, gender, phoneNum, address, levelOfEducation, yearsOfExperience, baseSalary, bonus);
+        setTreatmentTypes(treatmentTypes);
+    }
+
     public ArrayList<TreatmentType> getTreatmentTypes() {
         return this.treatmentTypes;
     }

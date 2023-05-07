@@ -41,6 +41,15 @@ public class AppointmentService extends Service<Appointment> {
         return add(cosmeticTreatment, cosmetologist, client, date, time, price, CosmeticTreatmentStatus.SCHEDULED);
     }
 
+    public void removeByCosmeticTreatment(CosmeticTreatment cosmeticTreatment){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmeticTreatment().equals(cosmeticTreatment)){
+                remove(appointment);
+            }
+        }
+    }
+
     @Override
     protected String getFilename() {
         return appSettings.getAppointmentFilename();
