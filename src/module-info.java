@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author nikola
- *
- */
-module BeautySalon {
-}
