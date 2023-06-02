@@ -11,11 +11,11 @@ public class Appointment implements IdAssignable, CsvConvertible {
     private LocalDate date;
     private LocalTime time;
     private double price;
-    private CosmeticTreatmentStatus status;
+    private AppointmentStatus status;
 
     public Appointment() {}
 
-    public Appointment(int id, CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate date, LocalTime time, double price, CosmeticTreatmentStatus status){
+    public Appointment(int id, CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate date, LocalTime time, double price, AppointmentStatus status){
         setId(id);
         setCosmeticTreatment(cosmeticTreatment);
         setCosmetologist(cosmetologist);
@@ -82,11 +82,11 @@ public class Appointment implements IdAssignable, CsvConvertible {
         this.price = price;
     }
 
-    public CosmeticTreatmentStatus getStatus() {
+    public AppointmentStatus getStatus() {
         return this.status;
     }
 
-    public void setStatus(CosmeticTreatmentStatus status) {
+    public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
 
@@ -107,7 +107,7 @@ public class Appointment implements IdAssignable, CsvConvertible {
             LocalDate.parse(line[4]),
             LocalTime.parse(line[5]),
             Double.parseDouble(line[6]),
-            CosmeticTreatmentStatus.valueOf(line[7])
+            AppointmentStatus.valueOf(line[7])
         );
     }
 
