@@ -1,6 +1,8 @@
 package entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ui.CosmetologistCLI;
 import utils.AppSettings;
@@ -46,6 +48,29 @@ public class Cosmetologist extends Employee {
 
     public void removeTreatmentType(TreatmentType treatmentType){
         getTreatmentTypes().remove(treatmentType);
+    }
+
+    public ArrayList<Integer> getTimetable(ArrayList<Appointment> appointments, LocalDate datum){
+        ArrayList<Integer> timetable = new ArrayList<Integer>();
+        for (Appointment appointment : appointments) {
+            if (appointment.getCosmetologist().equals(this) && appointment.getDate().equals(datum) && appointment.getStatus().equals(AppointmentStatus.SCHEDULED)){
+                timetable.add(appointment.getTime().getHour());
+            }
+        }
+        Collections.sort(timetable);
+        return timetable;
+    }
+
+    public ArrayList<Integer> getFreeHours(ArrayList<Appointment> appointments, LocalDate datum, int openingHour, int closingHour){
+        ArrayList<Integer> timetable = getTimetable(appointments, datum);
+        ArrayList<Integer> freeHours = new ArrayList<Integer>();
+        int i = 0; // index of timetable
+        for (int hour = openingHour; hour < closingHour; hour++) {
+            while (i < timetable.size() && timetable.get(i) < hour) i++;
+            if (i < timetable.size() && timetable.get(i) == hour) continue;
+            freeHours.add(hour);
+        }
+        return freeHours;
     }
 
     public static Cosmetologist parseFromCsv(String[] line, ArrayList<TreatmentType> treatmentTypes){
