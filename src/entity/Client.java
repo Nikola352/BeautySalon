@@ -30,6 +30,10 @@ public class Client extends User {
         this.totalSpent = totalSpent;
     }
 
+    public void addTotalSpent(double totalSpent) {
+        this.totalSpent += totalSpent;
+    }
+
     public boolean isHasLoyaltyCard() {
         return this.hasLoyaltyCard;
     }

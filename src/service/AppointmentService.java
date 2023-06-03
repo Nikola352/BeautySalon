@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 import entity.Client;
 import entity.CosmeticTreatment;
-import entity.CosmeticTreatmentStatus;
+import entity.AppointmentStatus;
 import entity.Cosmetologist;
+import entity.User;
 import entity.Appointment;
 import utils.CsvUtil;
 
@@ -28,17 +29,33 @@ public class AppointmentService extends Service<Appointment> {
         priceListService = serviceRegistry.getPriceListService();
     }
 
-    public Appointment add(CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate data, LocalTime time, double price, CosmeticTreatmentStatus status){
+    public Appointment add(CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate data, LocalTime time, double price, AppointmentStatus status){
         Appointment appointment = new Appointment(getNextId(), cosmeticTreatment, cosmetologist, client, data, time, price, status);
         add(appointment);
         incrementNextId();
         return appointment;
     }
 
-    public Appointment add(CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate date, LocalTime time){
+    public Appointment schedule(CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate date, LocalTime time){
         double discount = beautySalonService.getBeautySalon().getLoyaltyCardDiscount();
         double price = Appointment.calculatePrice(priceListService.getPrice(cosmeticTreatment.getId()), client, discount);
-        return add(cosmeticTreatment, cosmetologist, client, date, time, price, CosmeticTreatmentStatus.SCHEDULED);
+        client.addTotalSpent(price);
+        beautySalonService.getBeautySalon().addIncome(price);
+        return add(cosmeticTreatment, cosmetologist, client, date, time, price, AppointmentStatus.SCHEDULED);
+    }
+
+    public void cancel(Appointment appointment, User user){
+        if(user instanceof Client){
+            appointment.setStatus(AppointmentStatus.CANCELED_BY_CLIENT);
+            // return 90% of the price to the client
+            appointment.getClient().addTotalSpent(-0.9 * appointment.getPrice());
+            beautySalonService.getBeautySalon().addExpense(0.9 * appointment.getPrice());
+        } else {
+            appointment.setStatus(AppointmentStatus.CANCELED_BY_SALON);
+            // return 100% of the price to the client
+            appointment.getClient().addTotalSpent(-appointment.getPrice());
+            beautySalonService.getBeautySalon().addExpense(appointment.getPrice());
+        }
     }
 
     public void removeByCosmeticTreatment(CosmeticTreatment cosmeticTreatment){

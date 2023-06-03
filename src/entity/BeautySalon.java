@@ -145,10 +145,12 @@ public class BeautySalon implements CsvConvertible {
 
     public void addIncome(double income){
         setTotalIncome(getTotalIncome() + income);
+        calculateProfit();
     }
     
     public void addExpense(double expense){
         setTotalExpenses(getTotalExpenses() + expense);
+        calculateProfit();
     }
 
     public double calculateProfit(){

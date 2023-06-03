@@ -81,7 +81,7 @@ public class ClientCLI implements CLI {
         LocalDate localDate = LocalDate.parse(date);
         LocalTime localTime = LocalTime.parse(time);
 
-        appointmentService.add(cosmeticTreatment, cosmetologist, user, localDate, localTime);
+        appointmentService.schedule(cosmeticTreatment, cosmetologist, user, localDate, localTime);
         appointmentService.saveData();
 
         System.out.println("Appointment scheduled!");
