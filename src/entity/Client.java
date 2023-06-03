@@ -42,6 +42,13 @@ public class Client extends User {
         this.hasLoyaltyCard = hasLoyaltyCard;
     }
 
+    public void updateLoyaltyCardStatus(double loyaltyCardThreshold){
+        if (getTotalSpent() >= loyaltyCardThreshold)
+            setHasLoyaltyCard(true);
+        else 
+            setHasLoyaltyCard(false);
+    }
+
     public static Client parseFromCsv(String[] line){
         return new Client(
             Integer.parseInt(line[0]),
