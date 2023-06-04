@@ -45,6 +45,32 @@ public class CosmeticTreatmentService extends Service<CosmeticTreatment> {
         priceListService.update(cosmeticTreatment.getId(), price);
     }
 
+    // @param name - null if you don't want to filter by name
+    // @param treatmentType - null if you don't want to filter by treatmentType
+    // @param price - -1 if you don't want to filter by price
+    // @param duration - -1 if you don't want to filter by duration
+    // @return ArrayList<CosmeticTreatment> - list of cosmetic treatments that match the criteria
+    public ArrayList<CosmeticTreatment> getBy(String name, TreatmentType treatmentType, double price, int duration){
+        ArrayList<CosmeticTreatment> cosmeticTreatments = new ArrayList<CosmeticTreatment>(getData());
+        ArrayList<CosmeticTreatment> result = new ArrayList<CosmeticTreatment>();
+        for(CosmeticTreatment cosmeticTreatment : cosmeticTreatments){
+            if(name != null && !cosmeticTreatment.getName().equals(name)){
+                continue;
+            }
+            if(treatmentType != null && !cosmeticTreatment.getTreatmentType().equals(treatmentType)){
+                continue;
+            }
+            if(price != -1 && priceListService.getPrice(cosmeticTreatment) != price){
+                continue;
+            }
+            if(duration != -1 && cosmeticTreatment.getDuration() != duration){
+                continue;
+            }
+            result.add(cosmeticTreatment);
+        }
+        return result;
+    }
+
     @Override
     protected String getFilename() {
         return appSettings.getCosmeticTreatmentFilename();

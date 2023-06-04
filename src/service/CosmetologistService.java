@@ -35,6 +35,25 @@ public class CosmetologistService extends Service<Cosmetologist> {
         return null;
     }
 
+    public ArrayList<Cosmetologist> getByTreatmentType(TreatmentType treatmentType) {
+        ArrayList<Cosmetologist> cosmetologists = getData();
+        ArrayList<Cosmetologist> result = new ArrayList<Cosmetologist>();
+        for (Cosmetologist cosmetologist : cosmetologists) {
+            if (cosmetologist.getTreatmentTypes().contains(treatmentType)) {
+                result.add(cosmetologist);
+            }
+        }
+        return result;
+    }
+
+    public Cosmetologist getRandomByTreatmentType(TreatmentType treatmentType) {
+        ArrayList<Cosmetologist> cosmetologists = getByTreatmentType(treatmentType);
+        if (cosmetologists.size() == 0) {
+            return null;
+        }
+        return cosmetologists.get((int) (Math.random() * cosmetologists.size()));
+    }
+
     @Override
     protected String getFilename() {
         return appSettings.getCosmetologistFilename();

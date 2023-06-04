@@ -9,6 +9,7 @@ import entity.Client;
 import entity.CosmeticTreatment;
 import entity.AppointmentStatus;
 import entity.Cosmetologist;
+import entity.TreatmentType;
 import entity.User;
 import entity.Appointment;
 import utils.CsvUtil;
@@ -66,6 +67,229 @@ public class AppointmentService extends Service<Appointment> {
             }
         }
     }
+
+    public ArrayList<Appointment> getByCosmetologist(Cosmetologist cosmetologist){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmetologist().equals(cosmetologist)){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Appointment> getByClient(Client client){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getClient().equals(client)){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Appointment> getByDateAndCosmetologist(LocalDate date, Cosmetologist cosmetologist){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getDate().equals(date) && appointment.getCosmetologist().equals(cosmetologist)){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Appointment> getByStatus(AppointmentStatus status){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getStatus().equals(status)){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Appointment> getByCosmeticTreatment(CosmeticTreatment cosmeticTreatment){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmeticTreatment().equals(cosmeticTreatment)){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Appointment> getByCosmetologistForTimePeriod(Cosmetologist cosmetologist, LocalDate startDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmetologist().equals(cosmetologist) && 
+                appointment.getStatus().equals(AppointmentStatus.COMPLETED) &&
+                (appointment.getDate().isAfter(startDate) || appointment.getDate().isEqual(startDate)) &&
+                (appointment.getDate().isBefore(endDate) || appointment.getDate().isEqual(endDate))
+            ){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Appointment> getByStatusForTimePeriod(AppointmentStatus status, LocalDate starDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getStatus().equals(status) &&
+                (appointment.getDate().isAfter(starDate) || appointment.getDate().isEqual(starDate)) &&
+                (appointment.getDate().isBefore(endDate) || appointment.getDate().isEqual(endDate))
+            ){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    public double getTotalIncomeForTimePeriod(LocalDate startDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        double totalIncome = 0;
+        for(Appointment appointment : appointments){
+            if(appointment.getDate().isBefore(startDate) || appointment.getDate().isAfter(endDate))
+                continue;
+            if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_CLIENT)){
+                totalIncome += 0.9 * appointment.getPrice();
+            } else if(!appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_SALON)) {
+                totalIncome += appointment.getPrice();
+            }
+        }
+        return totalIncome;
+    }
+
+    public int getNumByCosmetologistForTimePeriod(Cosmetologist cosmetologist, LocalDate startDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        int num = 0;
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmetologist().equals(cosmetologist) && 
+                appointment.getStatus().equals(AppointmentStatus.COMPLETED) &&
+                (appointment.getDate().isAfter(startDate) || appointment.getDate().isEqual(startDate)) &&
+                (appointment.getDate().isBefore(endDate) || appointment.getDate().isEqual(endDate))
+            ){
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public double getTotalIncomeByCosmetologistForTimePeriod(Cosmetologist cosmetologist, LocalDate startDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        double totalIncome = 0;
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmetologist().equals(cosmetologist) && 
+                (appointment.getDate().isAfter(startDate) || appointment.getDate().isEqual(startDate)) &&
+                (appointment.getDate().isBefore(endDate) || appointment.getDate().isEqual(endDate))
+            ){
+                if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_CLIENT)){
+                    totalIncome += 0.1 * appointment.getPrice();
+                } else if(!appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_SALON)) {
+                    totalIncome += appointment.getPrice();
+                }
+            }
+        }
+        return totalIncome;
+    }
+
+    public int getNumByStatusForTimePeriod(AppointmentStatus status, LocalDate startDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        int num = 0;
+        for(Appointment appointment : appointments){
+            if(appointment.getStatus().equals(status) &&
+                (appointment.getDate().isAfter(startDate) || appointment.getDate().isEqual(startDate)) &&
+                (appointment.getDate().isBefore(endDate) || appointment.getDate().isEqual(endDate))
+            ){
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public int getNumByCosmeticTreatmentForTimePeriod(CosmeticTreatment cosmeticTreatment, LocalDate startDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        int num = 0;
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmeticTreatment().equals(cosmeticTreatment) && 
+                (appointment.getDate().isAfter(startDate) || appointment.getDate().isEqual(startDate)) &&
+                (appointment.getDate().isBefore(endDate) || appointment.getDate().isEqual(endDate))
+            ){
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public double getTotalIncomeByCosmeticTreatmentForTimePeriod(CosmeticTreatment cosmeticTreatment, LocalDate startDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        double totalIncome = 0;
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmeticTreatment().equals(cosmeticTreatment) && 
+                (appointment.getDate().isAfter(startDate) || appointment.getDate().isEqual(startDate)) &&
+                (appointment.getDate().isBefore(endDate) || appointment.getDate().isEqual(endDate))
+            ){
+                if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_CLIENT)){
+                    totalIncome += 0.1 * appointment.getPrice();
+                } else if(!appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_SALON)) {
+                    totalIncome += appointment.getPrice();
+                }
+            }
+        }
+        return totalIncome;
+    }
+
+    // @return ArrayList<Appointment> - appointments with price in range [minPrice, maxPrice]
+    public ArrayList<Appointment> getInPriceRange(double minPrice, double maxPrice){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getPrice() >= minPrice && appointment.getPrice() <= maxPrice){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    // @return ArrayList<Appointment> - appointments with price in range [minPrice, maxPrice] and CosmeticTreatment
+    public ArrayList<Appointment> getByCosmeticTreatmentInPriceRange(double minPrice, double maxPrice, CosmeticTreatment cosmeticTreatment){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getPrice() >= minPrice && 
+                appointment.getPrice() <= maxPrice && 
+                appointment.getCosmeticTreatment().equals(cosmeticTreatment)
+            ){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    // @return ArrayList<Appointment> - appointments with price in range [minPrice, maxPrice] and TreatmentType
+    public ArrayList<Appointment> getByCosmeticTreatmentTypeInPriceRange(double minPrice, double maxPrice, TreatmentType cosmeticTreatmentType){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getPrice() >= minPrice && 
+                appointment.getPrice() <= maxPrice && 
+                appointment.getCosmeticTreatment().getTreatmentType().equals(cosmeticTreatmentType)
+            ){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
+    // TODO: filtered getters for diagram data 
+    // determine the required format based on ui requirements
 
     @Override
     protected String getFilename() {
