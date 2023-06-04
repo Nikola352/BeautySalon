@@ -50,25 +50,31 @@ public class Cosmetologist extends Employee {
         getTreatmentTypes().remove(treatmentType);
     }
 
-    public ArrayList<Integer> getTimetable(ArrayList<Appointment> appointments, LocalDate datum){
-        ArrayList<Integer> timetable = new ArrayList<Integer>();
+    public ArrayList<Integer[]> getTimetable(ArrayList<Appointment> appointments, LocalDate datum){
+        ArrayList<Integer[]> timetable = new ArrayList<Integer[]>();
         for (Appointment appointment : appointments) {
             if (appointment.getCosmetologist().equals(this) && appointment.getDate().equals(datum) && appointment.getStatus().equals(AppointmentStatus.SCHEDULED)){
-                timetable.add(appointment.getTime().getHour());
+                timetable.add(new Integer[]{appointment.getTime().getHour(), appointment.getCosmeticTreatment().getDuration()});
             }
         }
-        Collections.sort(timetable);
+        Collections.sort(timetable, (a, b) -> a[0] - b[0]);
         return timetable;
     }
 
     public ArrayList<Integer> getFreeHours(ArrayList<Appointment> appointments, LocalDate datum, int openingHour, int closingHour){
-        ArrayList<Integer> timetable = getTimetable(appointments, datum);
         ArrayList<Integer> freeHours = new ArrayList<Integer>();
-        int i = 0; // index of timetable
-        for (int hour = openingHour; hour < closingHour; hour++) {
-            while (i < timetable.size() && timetable.get(i) < hour) i++;
-            if (i < timetable.size() && timetable.get(i) == hour) continue;
-            freeHours.add(hour);
+        ArrayList<Integer[]> timetable = getTimetable(appointments, datum); // [0]->start hour, [1]->duration in minutes
+        for(int hour = openingHour; hour < closingHour; hour++){
+            boolean isFree = true;
+            for (Integer[] appointment : timetable) {
+                if (hour >= appointment[0] && hour < appointment[0] + appointment[1] / 60){
+                    isFree = false;
+                    break;
+                }
+            }
+            if (isFree){
+                freeHours.add(hour);
+            }
         }
         return freeHours;
     }
