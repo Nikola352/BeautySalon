@@ -16,7 +16,7 @@ public class BeautySalon implements CsvConvertible {
     private double totalProfit;
 
     // for employees
-    private int bonusThreashold; 
+    private double bonusThreshold; 
     private double bonusAmount;
 
     // for clients
@@ -25,7 +25,7 @@ public class BeautySalon implements CsvConvertible {
 
     public BeautySalon() {}
 
-    public BeautySalon(String name, int openingHour, int closingHour, ArrayList<DayOfWeek> workingDays,  double totalIncome, double totalExpenses, double totalProfit, int bonusThreashold, double bonusValue, double loyaltyCardDiscount, double loyaltyCardThreshold){
+    public BeautySalon(String name, int openingHour, int closingHour, ArrayList<DayOfWeek> workingDays,  double totalIncome, double totalExpenses, double totalProfit, double bonusThreashold, double bonusValue, double loyaltyCardDiscount, double loyaltyCardThreshold){
         setName(name);
         setOpeningHour(openingHour);
         setClosingHour(closingHour);
@@ -33,7 +33,7 @@ public class BeautySalon implements CsvConvertible {
         setTotalIncome(totalIncome);
         setTotalExpenses(totalExpenses);
         setTotalProfit(totalProfit);
-        setBonusThreashold(bonusThreashold);
+        setBonusThreshold(bonusThreashold);
         setBonusAmount(bonusValue);
         setLoyaltyCardDiscount(loyaltyCardDiscount);
         setLoyaltyCardThreshold(loyaltyCardThreshold);
@@ -111,12 +111,12 @@ public class BeautySalon implements CsvConvertible {
         this.totalProfit = totalProfit;
     }
 
-    public int getBonusThreashold() {
-        return this.bonusThreashold;
+    public double getBonusThreshold() {
+        return this.bonusThreshold;
     }
 
-    public void setBonusThreashold(int bonusThreashold) {
-        this.bonusThreashold = bonusThreashold;
+    public void setBonusThreshold(double bonusThreashold) {
+        this.bonusThreshold = bonusThreashold;
     }
 
     public double getBonusAmount() {
@@ -196,7 +196,7 @@ public class BeautySalon implements CsvConvertible {
             Double.toString(getTotalIncome()),
             Double.toString(getTotalExpenses()),
             Double.toString(getTotalProfit()),
-            Integer.toString(getBonusThreashold()),
+            Double.toString(getBonusThreshold()),
             Double.toString(getBonusAmount()),
             Double.toString(getLoyaltyCardDiscount()),
             Double.toString(getLoyaltyCardThreshold())
