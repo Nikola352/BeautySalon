@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import entity.BeautySalon;
+import entity.Client;
 import utils.AppSettings;
 import utils.CsvUtil;
 
@@ -11,8 +12,22 @@ public class BeautySalonService {
     private BeautySalon beautySalon = new BeautySalon();
     private AppSettings appSettings = AppSettings.getInstance();
     
+    private ClientService clientService;
+
+    public BeautySalonService() {
+        ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
+        clientService = serviceRegistry.getClientService();
+    }
+
     public BeautySalon getBeautySalon() {
         return this.beautySalon;
+    }
+
+    public void updateLoyaltyCardStatus(){
+        ArrayList<Client> clients = clientService.getData();
+        for (Client client : clients) {
+            client.updateLoyaltyCardStatus(beautySalon.getLoyaltyCardThreshold());
+        }
     }
 
     public void loadBeautySalon() {
