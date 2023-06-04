@@ -173,7 +173,7 @@ public class BeautySalon implements CsvConvertible {
             Double.parseDouble(line[4]),
             Double.parseDouble(line[5]),
             Double.parseDouble(line[6]),
-            Integer.parseInt(line[7]),
+            Double.parseDouble(line[7]),
             Double.parseDouble(line[8]),
             Double.parseDouble(line[9]),
             Double.parseDouble(line[10])
