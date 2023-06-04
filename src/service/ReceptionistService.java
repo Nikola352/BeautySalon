@@ -1,6 +1,7 @@
 package service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import entity.Gender;
@@ -30,6 +31,29 @@ public class ReceptionistService extends Service<Receptionist> {
             }
         }
         return null;
+    }
+
+    public double getTotalSalaryForTimePeriod(LocalDate startDate, LocalDate endDate) {
+        int firstDays = 0;
+        LocalDate firstDayOfMonth = startDate;
+        while (firstDayOfMonth.isBefore(endDate)) {
+            if (firstDayOfMonth.getDayOfMonth() == 1) {
+                firstDays++;
+            }
+            firstDayOfMonth = firstDayOfMonth.plusDays(1);
+        }
+
+        double totalSalary = 0;
+        for (Receptionist receptionist : getData()) {
+            totalSalary += receptionist.getSalary() * firstDays;
+        }
+        return totalSalary;
+    }
+
+    public void updateBonus(double bonusThreashold, double bonusValue) {
+        for (Receptionist receptionist : getData()) {
+            receptionist.updateBonus(bonusThreashold, bonusValue);
+        }
     }
 
     @Override

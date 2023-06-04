@@ -6,6 +6,7 @@ public abstract class Employee extends User {
     double baseSalary;
     double bonus;
     double salary;
+    double currentMonthIncome; // for calculating bonus
 
     public Employee() {
         super();
@@ -74,6 +75,25 @@ public abstract class Employee extends User {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public double getCurrentMonthIncome() {
+        return this.currentMonthIncome;
+    }
+
+    public void setCurrentMonthIncome(double currentMonthIncome) {
+        this.currentMonthIncome = currentMonthIncome;
+    }
+
+    public void incrementCurrentMonthIncome(double currentMonthIncome) {
+        this.currentMonthIncome += currentMonthIncome;
+    }
+
+    public void updateBonus(double bonusThreashold, double bonusValue) {
+        if (this.currentMonthIncome > bonusThreashold) {
+            this.bonus = bonusValue;
+        }
+        calculateSalary();
     }
 
     public double calculateSalary(){

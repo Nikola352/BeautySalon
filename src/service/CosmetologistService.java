@@ -1,5 +1,6 @@
 package service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import entity.Cosmetologist;
@@ -52,6 +53,29 @@ public class CosmetologistService extends Service<Cosmetologist> {
             return null;
         }
         return cosmetologists.get((int) (Math.random() * cosmetologists.size()));
+    }
+
+    public double getTotalSalaryForTimePeriod(LocalDate startDate, LocalDate endDate) {
+        int firstDays = 0;
+        LocalDate firstDayOfMonth = startDate;
+        while (firstDayOfMonth.isBefore(endDate)) {
+            if (firstDayOfMonth.getDayOfMonth() == 1) {
+                firstDays++;
+            }
+            firstDayOfMonth = firstDayOfMonth.plusDays(1);
+        }
+
+        double totalSalary = 0;
+        for (Cosmetologist cosmetologist : getData()) {
+            totalSalary += cosmetologist.getSalary() * firstDays;
+        }
+        return totalSalary;
+    }
+
+    public void updateBonus(double bonusThreashold, double bonusValue) {
+        for (Cosmetologist cosmetologist : getData()) {
+            cosmetologist.updateBonus(bonusThreashold, bonusValue);
+        }
     }
 
     @Override

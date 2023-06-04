@@ -1,6 +1,7 @@
 package service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import entity.BeautySalon;
@@ -13,10 +14,16 @@ public class BeautySalonService {
     private AppSettings appSettings = AppSettings.getInstance();
     
     private ClientService clientService;
+    private CosmetologistService cosmetologistService;
+    private ReceptionistService receptionistService;
+    private ManagerService managerService;
 
     public BeautySalonService() {
         ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
         clientService = serviceRegistry.getClientService();
+        cosmetologistService = serviceRegistry.getCosmetologistService();
+        receptionistService = serviceRegistry.getReceptionistService();
+        managerService = serviceRegistry.getManagerService();
     }
 
     public BeautySalon getBeautySalon() {
@@ -28,6 +35,20 @@ public class BeautySalonService {
         for (Client client : clients) {
             client.updateLoyaltyCardStatus(beautySalon.getLoyaltyCardThreshold());
         }
+    }
+
+    public double getTotalSalaryForTimePeriod(LocalDate startDate, LocalDate endDate) {
+        double totalSalary = 0;
+        totalSalary += cosmetologistService.getTotalSalaryForTimePeriod(startDate, endDate);
+        totalSalary += receptionistService.getTotalSalaryForTimePeriod(startDate, endDate);
+        totalSalary += managerService.getTotalSalaryForTimePeriod(startDate, endDate);
+        return totalSalary;
+    }
+
+    public void updateEmployeeBonus() {
+        cosmetologistService.updateBonus(beautySalon.getBonusThreshold(), beautySalon.getBonusAmount());
+        receptionistService.updateBonus(beautySalon.getBonusThreshold(), beautySalon.getBonusAmount());
+        managerService.updateBonus(beautySalon.getBonusThreshold(), beautySalon.getBonusAmount());
     }
 
     public void loadBeautySalon() {

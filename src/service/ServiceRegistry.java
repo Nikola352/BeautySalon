@@ -3,7 +3,6 @@ package service;
 public class ServiceRegistry {
     private static ServiceRegistry instance;
 
-    private BeautySalonService beautySalonService;
     private PriceListService priceListService;
     private TreatmentTypeService treatmentTypeService;
     private CosmeticTreatmentService cosmeticTreatmentService;
@@ -11,6 +10,7 @@ public class ServiceRegistry {
     private CosmetologistService cosmetologistService;
     private ReceptionistService receptionistService;
     private ManagerService managerService;
+    private BeautySalonService beautySalonService;
     private AppointmentService appointmentService;
 
     private ServiceRegistry() {}
@@ -59,10 +59,8 @@ public class ServiceRegistry {
     }
 
     public void loadData(){
-        if(beautySalonService == null)
-            beautySalonService = new BeautySalonService();
         if(priceListService == null)
-            priceListService = new PriceListService();
+        priceListService = new PriceListService();
         if(treatmentTypeService == null)
             treatmentTypeService = new TreatmentTypeService();
         if(cosmeticTreatmentService == null)
@@ -75,10 +73,11 @@ public class ServiceRegistry {
             receptionistService = new ReceptionistService();
         if(managerService == null)
             managerService = new ManagerService();
+        if(beautySalonService == null)
+            beautySalonService = new BeautySalonService();
         if(appointmentService == null)
             appointmentService = new AppointmentService();
 
-        beautySalonService.loadBeautySalon();
         treatmentTypeService.loadData();
         cosmeticTreatmentService.loadData();
         priceListService.loadPriceList();
@@ -86,11 +85,11 @@ public class ServiceRegistry {
         cosmetologistService.loadData();
         receptionistService.loadData();
         managerService.loadData();
+        beautySalonService.loadBeautySalon();
         appointmentService.loadData();
     }
 
     public void saveData(){
-        beautySalonService.saveBeautySalon();
         priceListService.savePriceList();
         treatmentTypeService.saveData();
         cosmeticTreatmentService.saveData();
@@ -98,6 +97,7 @@ public class ServiceRegistry {
         cosmetologistService.saveData();
         receptionistService.saveData();
         managerService.saveData();
+        beautySalonService.saveBeautySalon();
         appointmentService.saveData();
     }
 }

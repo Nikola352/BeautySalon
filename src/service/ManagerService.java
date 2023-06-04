@@ -1,6 +1,7 @@
 package service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import entity.Gender;
@@ -23,6 +24,29 @@ public class ManagerService extends Service<Manager> {
             }
         }
         return null;
+    }
+
+    public double getTotalSalaryForTimePeriod(LocalDate startDate, LocalDate endDate) {
+        int firstDays = 0;
+        LocalDate firstDayOfMonth = startDate;
+        while (firstDayOfMonth.isBefore(endDate)) {
+            if (firstDayOfMonth.getDayOfMonth() == 1) {
+                firstDays++;
+            }
+            firstDayOfMonth = firstDayOfMonth.plusDays(1);
+        }
+
+        double totalSalary = 0;
+        for (Manager manager : getData()) {
+            totalSalary += manager.getSalary() * firstDays;
+        }
+        return totalSalary;
+    }
+
+    public void updateBonus(double bonusThreashold, double bonusValue) {
+        for (Manager manager : getData()) {
+            manager.updateBonus(bonusThreashold, bonusValue);
+        }
     }
 
     @Override

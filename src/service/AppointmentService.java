@@ -41,6 +41,7 @@ public class AppointmentService extends Service<Appointment> {
         double discount = beautySalonService.getBeautySalon().getLoyaltyCardDiscount();
         double price = Appointment.calculatePrice(priceListService.getPrice(cosmeticTreatment.getId()), client, discount);
         client.addTotalSpent(price);
+        cosmetologist.incrementCurrentMonthIncome(price);
         beautySalonService.getBeautySalon().addIncome(price);
         return add(cosmeticTreatment, cosmetologist, client, date, time, price, AppointmentStatus.SCHEDULED);
     }
@@ -50,11 +51,13 @@ public class AppointmentService extends Service<Appointment> {
             appointment.setStatus(AppointmentStatus.CANCELED_BY_CLIENT);
             // return 90% of the price to the client
             appointment.getClient().addTotalSpent(-0.9 * appointment.getPrice());
+            appointment.getCosmetologist().incrementCurrentMonthIncome(-0.9 * appointment.getPrice());
             beautySalonService.getBeautySalon().addExpense(0.9 * appointment.getPrice());
         } else {
             appointment.setStatus(AppointmentStatus.CANCELED_BY_SALON);
             // return 100% of the price to the client
             appointment.getClient().addTotalSpent(-appointment.getPrice());
+            appointment.getCosmetologist().incrementCurrentMonthIncome(-appointment.getPrice());
             beautySalonService.getBeautySalon().addExpense(appointment.getPrice());
         }
     }
@@ -158,13 +161,31 @@ public class AppointmentService extends Service<Appointment> {
         for(Appointment appointment : appointments){
             if(appointment.getDate().isBefore(startDate) || appointment.getDate().isAfter(endDate))
                 continue;
-            if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_CLIENT)){
-                totalIncome += 0.9 * appointment.getPrice();
-            } else if(!appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_SALON)) {
-                totalIncome += appointment.getPrice();
-            }
+            totalIncome += appointment.getPrice();
         }
         return totalIncome;
+    }
+
+    public double getTotalExpensesForTimePeriod(LocalDate startDate, LocalDate endDate){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        double totalExpenses = 0;
+        for(Appointment appointment : appointments){
+            if(appointment.getDate().isBefore(startDate) || appointment.getDate().isAfter(endDate))
+                continue;
+            if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_CLIENT)){
+                totalExpenses += 0.9 * appointment.getPrice();
+            } else if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_SALON)) {
+                totalExpenses += appointment.getPrice();
+            }
+        }
+
+        totalExpenses += beautySalonService.getTotalSalaryForTimePeriod(startDate, endDate);
+
+        return totalExpenses;
+    }
+
+    public double getTotalProfitForTimePeriod(LocalDate startDate, LocalDate endDate){
+        return getTotalIncomeForTimePeriod(startDate, endDate) - getTotalExpensesForTimePeriod(startDate, endDate);
     }
 
     public int getNumByCosmetologistForTimePeriod(Cosmetologist cosmetologist, LocalDate startDate, LocalDate endDate){
@@ -182,7 +203,7 @@ public class AppointmentService extends Service<Appointment> {
         return num;
     }
 
-    public double getTotalIncomeByCosmetologistForTimePeriod(Cosmetologist cosmetologist, LocalDate startDate, LocalDate endDate){
+    public double getTotalProfitByCosmetologistForTimePeriod(Cosmetologist cosmetologist, LocalDate startDate, LocalDate endDate){
         ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
         double totalIncome = 0;
         for(Appointment appointment : appointments){
@@ -228,7 +249,7 @@ public class AppointmentService extends Service<Appointment> {
         return num;
     }
 
-    public double getTotalIncomeByCosmeticTreatmentForTimePeriod(CosmeticTreatment cosmeticTreatment, LocalDate startDate, LocalDate endDate){
+    public double getTotalProfitByCosmeticTreatmentForTimePeriod(CosmeticTreatment cosmeticTreatment, LocalDate startDate, LocalDate endDate){
         ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
         double totalIncome = 0;
         for(Appointment appointment : appointments){
@@ -290,6 +311,9 @@ public class AppointmentService extends Service<Appointment> {
 
     // TODO: filtered getters for diagram data 
     // determine the required format based on ui requirements
+
+
+
 
     @Override
     protected String getFilename() {
