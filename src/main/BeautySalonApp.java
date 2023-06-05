@@ -2,10 +2,11 @@ package main;
 
 import entity.User;
 import service.ServiceRegistry;
-import ui.LoginCLI;
+import ui.LoginCallback;
+import ui.LoginGUI;
+import ui.LogoutCallback;
 
-public class BeautySalonApp {
-    private User currentUser;
+public class BeautySalonApp implements LoginCallback, LogoutCallback {
     ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
 
     public BeautySalonApp() {
@@ -13,12 +14,18 @@ public class BeautySalonApp {
     }
 
     public void login(){
-        LoginCLI loginCLI = new LoginCLI();
-        currentUser = loginCLI.run();
+        LoginGUI loginGUI = new LoginGUI(this);
+        loginGUI.setVisible(true);
     }
 
-    public void logout(){
-        currentUser = null;
+    @Override
+    public void onLoginSuccess(User loggedInUser) {
+        loggedInUser.showGUI(this);
+    }
+
+    @Override
+    public void onLogout() {
+        login();
     }
 
     public void exit(){
@@ -26,20 +33,9 @@ public class BeautySalonApp {
         serviceRegistry.saveData();
     }
 
-    public void run() {
-        while(true){
-            login();
-            if (currentUser == null)
-                break;
-            else if(!currentUser.showCLI())
-                break;
-        }
-        exit();
-    }
-
 	public static void main(String[] args) {
         BeautySalonApp app = new BeautySalonApp();
-        app.run();
+        app.login();
 	}
 
 }

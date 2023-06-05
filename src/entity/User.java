@@ -1,5 +1,7 @@
 package entity;
 
+import ui.LogoutCallback;
+
 public abstract class User implements IdAssignable, CsvConvertible {
     private int id;
     private String username;
@@ -140,5 +142,5 @@ public abstract class User implements IdAssignable, CsvConvertible {
 
     abstract public String[] toCsv();
 
-    abstract public boolean showCLI();
+    abstract public void showGUI(LogoutCallback logoutCallback);
 }

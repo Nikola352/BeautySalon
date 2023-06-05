@@ -1,6 +1,7 @@
 package entity;
 
-import ui.ClientCLI;
+import ui.ClientGUI;
+import ui.LogoutCallback;
 
 public class Client extends User {
     private double totalSpent;
@@ -84,8 +85,8 @@ public class Client extends User {
     }
 
     @Override
-    public boolean showCLI(){
-        ClientCLI clientCLI = new ClientCLI(this);
-        return clientCLI.run();
+    public void showGUI(LogoutCallback logoutCallback){
+        ClientGUI clientGUI = new ClientGUI(this, logoutCallback);
+        clientGUI.setVisible(true);
     }
 }

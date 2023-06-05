@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import ui.CosmetologistCLI;
+import ui.CosmetologistGUI;
+import ui.LogoutCallback;
 import utils.AppSettings;
 
 public class Cosmetologist extends Employee {
@@ -123,8 +124,8 @@ public class Cosmetologist extends Employee {
     }
 
     @Override
-    public boolean showCLI(){
-        CosmetologistCLI CosmetologistCLI = new CosmetologistCLI(this);
-        return CosmetologistCLI.run();
+    public void showGUI(LogoutCallback logoutCallback){
+        CosmetologistGUI cosmetologistGUI = new CosmetologistGUI(this, logoutCallback);
+        cosmetologistGUI.setVisible(true);
     }
 }

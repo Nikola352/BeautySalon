@@ -1,6 +1,7 @@
 package entity;
 
-import ui.ReceptionistCLI;
+import ui.LogoutCallback;
+import ui.ReceptionistGUI;
 
 public class Receptionist extends Employee {
     public Receptionist() {
@@ -53,8 +54,8 @@ public class Receptionist extends Employee {
     }
 
     @Override
-    public boolean showCLI(){
-        ReceptionistCLI receptionistCLI = new ReceptionistCLI(this);
-        return receptionistCLI.run();
+    public void showGUI(LogoutCallback logoutCallback){
+        ReceptionistGUI receptionistGUI = new ReceptionistGUI(this, logoutCallback);
+        receptionistGUI.setVisible(true);
     }
 }

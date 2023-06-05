@@ -1,6 +1,7 @@
 package entity;
 
-import ui.ManagerCLI;
+import ui.LogoutCallback;
+import ui.ManagerGUI;
 
 public class Manager extends Employee {
     public Manager() {
@@ -52,8 +53,8 @@ public class Manager extends Employee {
     }
     
     @Override
-    public boolean showCLI(){
-        ManagerCLI managerCLI = new ManagerCLI(this);
-        return managerCLI.run();
+    public void showGUI(LogoutCallback logoutCallback){
+        ManagerGUI managerGUI = new ManagerGUI(this,logoutCallback);
+        managerGUI.setVisible(true);
     }
 }
