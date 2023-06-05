@@ -18,6 +18,7 @@ public class LoginGUI extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
+    private JButton registerButton;
 
     private LoginCallback loginCallback;
     private ClientService clientService;
@@ -34,19 +35,20 @@ public class LoginGUI extends JFrame {
 
         this.loginCallback = loginCallback;
 
-        initializeComponents();
-        setupLayout();
-        setupListeners();
         setTitle("Login");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        initializeComponents();
+        setupLayout();
+        setupListeners();
     }
 
     private void initializeComponents() {
-        usernameField = new JTextField(10);
-        passwordField = new JPasswordField(10);
+        usernameField = new JTextField(12);
+        passwordField = new JPasswordField(12);
         loginButton = new JButton("Ulogujte se");
+        registerButton = new JButton("Registracija");
     }
 
     private void setupLayout() {
@@ -60,7 +62,8 @@ public class LoginGUI extends JFrame {
         panel.add(new JLabel("Lozinka:"), "align label");
         panel.add(passwordField, "wrap");
 
-        panel.add(loginButton, "span, align center");
+        panel.add(loginButton, "span 2, split 2, align center, sizegroup btn");
+        panel.add(registerButton, "align center, sizegroup btn");
 
         getContentPane().add(panel);
     }
@@ -71,8 +74,8 @@ public class LoginGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
-                if(username.isEmpty() || password.isEmpty()) {
-                    JOptionPane.showMessageDialog(LoginGUI.this, "Morate uneti korisničko ime i lozinku.");
+                if(username.trim().isEmpty() || password.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(LoginGUI.this, "Morate uneti korisničko ime i lozinku.", "Greška", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 User loggedInUser = authenticateUser(username, password);
@@ -80,8 +83,16 @@ public class LoginGUI extends JFrame {
                     dispose();
                     loginCallback.onLoginSuccess(loggedInUser);
                 } else {
-                    JOptionPane.showMessageDialog(LoginGUI.this, "Pogrešno korisničko ime ili lozinka.");
+                    JOptionPane.showMessageDialog(LoginGUI.this, "Pogrešno korisničko ime ili lozinka.", "Greška", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new RegisterGUI(loginCallback).setVisible(true);
             }
         });
 
