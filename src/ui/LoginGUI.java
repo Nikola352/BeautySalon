@@ -1,6 +1,7 @@
 package ui;
 
 import entity.User;
+import net.miginfocom.swing.MigLayout;
 import service.ClientService;
 import service.CosmetologistService;
 import service.ManagerService;
@@ -8,7 +9,6 @@ import service.ReceptionistService;
 import service.ServiceRegistry;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -41,13 +41,6 @@ public class LoginGUI extends JFrame {
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                ServiceRegistry.getInstance().saveData();
-            }
-        });
     }
 
     private void initializeComponents() {
@@ -58,13 +51,16 @@ public class LoginGUI extends JFrame {
 
     private void setupLayout() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
-        panel.add(new JLabel("Korisničko ime:"));
-        panel.add(usernameField);
-        panel.add(new JLabel("Lozinka:"));
-        panel.add(passwordField);
-        panel.add(new JLabel());
-        panel.add(loginButton);
+        
+        panel.setLayout(new MigLayout("align 50% 50%"));
+
+        panel.add(new JLabel("Korisničko ime:"), "align label");
+        panel.add(usernameField, "wrap");
+
+        panel.add(new JLabel("Lozinka:"), "align label");
+        panel.add(passwordField, "wrap");
+
+        panel.add(loginButton, "span, align center");
 
         getContentPane().add(panel);
     }
