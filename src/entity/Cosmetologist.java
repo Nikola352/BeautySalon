@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import ui.CosmetologistGUI;
-import ui.LogoutCallback;
+import ui.cosmetologist.CosmetologistGUI;
+import ui.login.LogoutCallback;
 import utils.AppSettings;
 
 public class Cosmetologist extends Employee {

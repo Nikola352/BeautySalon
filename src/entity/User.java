@@ -1,6 +1,6 @@
 package entity;
 
-import ui.LogoutCallback;
+import ui.login.LogoutCallback;
 
 public abstract class User implements IdAssignable, CsvConvertible {
     private int id;

@@ -1,7 +1,7 @@
 package entity;
 
-import ui.LogoutCallback;
-import ui.ReceptionistGUI;
+import ui.login.LogoutCallback;
+import ui.receptionist.ReceptionistGUI;
 
 public class Receptionist extends Employee {
     public Receptionist() {

@@ -1,7 +1,7 @@
 package entity;
 
-import ui.ClientGUI;
-import ui.LogoutCallback;
+import ui.client.ClientGUI;
+import ui.login.LogoutCallback;
 
 public class Client extends User {
     private double totalSpent;

@@ -3,6 +3,7 @@ package ui;
 import javax.swing.JFrame;
 
 import service.ServiceRegistry;
+import ui.login.LogoutCallback;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

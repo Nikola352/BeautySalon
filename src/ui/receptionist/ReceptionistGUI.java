@@ -1,16 +1,18 @@
-package ui;
+package ui.receptionist;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import entity.Cosmetologist;
+import entity.Receptionist;
+import ui.GUI;
+import ui.login.LogoutCallback;
 
-public class CosmetologistGUI extends GUI {
-    private Cosmetologist user;
+public class ReceptionistGUI extends GUI {
+    private Receptionist user;
 
-    public CosmetologistGUI(Cosmetologist user, LogoutCallback logoutCallback) {
+    public ReceptionistGUI(Receptionist user, LogoutCallback logoutCallback) {
         super(logoutCallback);
         this.user = user;
         setTitle("Client");

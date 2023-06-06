@@ -2,9 +2,9 @@ package main;
 
 import entity.User;
 import service.ServiceRegistry;
-import ui.LoginCallback;
-import ui.LoginGUI;
-import ui.LogoutCallback;
+import ui.login.LoginCallback;
+import ui.login.LoginGUI;
+import ui.login.LogoutCallback;
 
 public class BeautySalonApp implements LoginCallback, LogoutCallback {
     ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();

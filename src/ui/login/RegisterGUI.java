@@ -1,4 +1,4 @@
-package ui;
+package ui.login;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

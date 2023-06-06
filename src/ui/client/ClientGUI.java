@@ -1,16 +1,18 @@
-package ui;
+package ui.client;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import entity.Manager;
+import entity.Client;
+import ui.GUI;
+import ui.login.LogoutCallback;
 
-public class ManagerGUI extends GUI {
-    private Manager user;
-
-    public ManagerGUI(Manager user, LogoutCallback logoutCallback) {
+public class ClientGUI extends GUI {
+    private Client user;
+    
+    public ClientGUI(Client user, LogoutCallback logoutCallback) {
         super(logoutCallback);
         this.user = user;
         setTitle("Client");

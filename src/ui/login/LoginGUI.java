@@ -1,4 +1,4 @@
-package ui;
+package ui.login;
 
 import entity.User;
 import net.miginfocom.swing.MigLayout;

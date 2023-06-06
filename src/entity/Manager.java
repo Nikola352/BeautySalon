@@ -1,7 +1,7 @@
 package entity;
 
-import ui.LogoutCallback;
-import ui.ManagerGUI;
+import ui.login.LogoutCallback;
+import ui.manager.ManagerGUI;
 
 public class Manager extends Employee {
     public Manager() {
