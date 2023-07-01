@@ -1,9 +1,6 @@
 package ui.manager;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JTabbedPane;
 
 import entity.Manager;
 import ui.GUI;
@@ -12,21 +9,38 @@ import ui.login.LogoutCallback;
 public class ManagerGUI extends GUI {
     private Manager user;
 
+    private JTabbedPane tabbedPane;
+    private SalonPanel salonPanel;
+    private CosmeticTreatmentPanel cosmeticTreatmentPanel;
+    private AppointmentPanel appointmentPanel;
+    private EmployeePanel employeePanel;
+    private ClientPanel clientPanel;
+
     public ManagerGUI(Manager user, LogoutCallback logoutCallback) {
         super(logoutCallback);
         this.user = user;
-        setTitle("Client");
+        setTitle("Menadžer - " + user.toString());
+        setSize(1200, 650);
         initializeComponents();
+        setupLayout();
     }
 
     private void initializeComponents() {
-        JLabel usernameLabel = new JLabel("Username: " + user.getUsername());
-        usernameLabel.setHorizontalAlignment(JLabel.CENTER);
-        JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(e -> {logout();}); 
+        tabbedPane = new JTabbedPane();
+        salonPanel = new SalonPanel(user);
+        cosmeticTreatmentPanel = new CosmeticTreatmentPanel(user);
+        appointmentPanel = new AppointmentPanel(user);
+        employeePanel = new EmployeePanel(user);
+        clientPanel = new ClientPanel(user);
+    }
 
-        this.add(usernameLabel, BorderLayout.CENTER);
-        this.add(logoutButton, BorderLayout.SOUTH);
+    private void setupLayout() {
+        tabbedPane.addTab("Salon", salonPanel);
+        tabbedPane.addTab("Kozmetički tretmani", cosmeticTreatmentPanel);
+        tabbedPane.addTab("Zakazani tretmani", appointmentPanel);
+        tabbedPane.addTab("Zaposleni", employeePanel);
+        tabbedPane.addTab("Klijenti", clientPanel);
+        add(tabbedPane);
     }
 
 }

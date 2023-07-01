@@ -38,11 +38,12 @@ public class CosmeticTreatmentService extends Service<CosmeticTreatment> {
         }
     }
 
-    public void update(CosmeticTreatment cosmeticTreatment, String name, TreatmentType treatmentType, double price, int duration){
+    public CosmeticTreatment update(CosmeticTreatment cosmeticTreatment, String name, TreatmentType treatmentType, double price, int duration){
         cosmeticTreatment.setName(name);
         cosmeticTreatment.setTreatmentType(treatmentType);
         cosmeticTreatment.setDuration(duration);
         priceListService.update(cosmeticTreatment.getId(), price);
+        return cosmeticTreatment;
     }
 
     // @param name - null if you don't want to filter by name

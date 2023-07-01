@@ -309,11 +309,46 @@ public class AppointmentService extends Service<Appointment> {
         return result;
     }
 
-    // TODO: filtered getters for diagram data 
-    // determine the required format based on ui requirements
+    public double[] getIncomeForLast12Months(){
+        double[] income = new double[12];
+        LocalDate today = LocalDate.now();
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        for(Appointment appointment : appointments){
+            if(appointment.getDate().isAfter(today.minusMonths(12)) &&
+                appointment.getDate().isBefore(today.plusDays(1))
+            ){
+                double incomeForMonth = appointment.getPrice();
+                if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_CLIENT)){
+                    incomeForMonth *= 0.1;
+                } else if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_SALON)){
+                    incomeForMonth = 0;
+                }
+                income[appointment.getDate().getMonthValue() - 1] += incomeForMonth;
+            }
+        }        
+        return income;
+    }
 
-
-
+    public double[] getIncomeForLast12MonthsByCosmeticTreatment(TreatmentType treatmentType){
+        double[] income = new double[12];
+        LocalDate today = LocalDate.now();
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmeticTreatment().getTreatmentType().equals(treatmentType) &&
+                appointment.getDate().isAfter(today.minusMonths(12)) &&
+                appointment.getDate().isBefore(today.plusDays(1))
+            ){
+                double incomeForMonth = appointment.getPrice();
+                if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_CLIENT)){
+                    incomeForMonth *= 0.1;
+                } else if(appointment.getStatus().equals(AppointmentStatus.CANCELED_BY_SALON)){
+                    incomeForMonth = 0;
+                }
+                income[appointment.getDate().getMonthValue() - 1] += incomeForMonth;
+            }
+        }        
+        return income;
+    }
 
     @Override
     protected String getFilename() {

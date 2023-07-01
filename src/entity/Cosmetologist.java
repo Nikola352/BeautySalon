@@ -39,7 +39,7 @@ public class Cosmetologist extends Employee {
         return this.treatmentTypes;
     }
 
-    private void setTreatmentTypes(ArrayList<TreatmentType> treatmentTypes) {
+    public void setTreatmentTypes(ArrayList<TreatmentType> treatmentTypes) {
         this.treatmentTypes = treatmentTypes;
     }
 
