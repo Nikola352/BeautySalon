@@ -143,4 +143,9 @@ public abstract class User implements IdAssignable, CsvConvertible {
     abstract public String[] toCsv();
 
     abstract public void showGUI(LogoutCallback logoutCallback);
+
+    @Override
+    public String toString(){
+        return String.format("%s %s (%s)", getName(), getLastname(), getUsername());
+    }
 }

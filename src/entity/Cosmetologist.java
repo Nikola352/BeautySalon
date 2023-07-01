@@ -62,13 +62,16 @@ public class Cosmetologist extends Employee {
         return timetable;
     }
 
-    public ArrayList<Integer> getFreeHours(ArrayList<Appointment> appointments, LocalDate datum, int openingHour, int closingHour){
+    public ArrayList<Integer> getFreeHours(ArrayList<Appointment> appointments, LocalDate datum, int openingHour, int closingHour, int treatmentDuration){
         ArrayList<Integer> freeHours = new ArrayList<Integer>();
         ArrayList<Integer[]> timetable = getTimetable(appointments, datum); // [0]->start hour, [1]->duration in minutes
         for(int hour = openingHour; hour < closingHour; hour++){
             boolean isFree = true;
             for (Integer[] appointment : timetable) {
                 if (hour >= appointment[0] && hour < appointment[0] + appointment[1] / 60){
+                    isFree = false;
+                    break;
+                } else if (hour + treatmentDuration > appointment[0] && hour + treatmentDuration <= appointment[0] + appointment[1] / 60){
                     isFree = false;
                     break;
                 }

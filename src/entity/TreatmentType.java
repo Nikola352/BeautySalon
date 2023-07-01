@@ -60,4 +60,9 @@ public class TreatmentType implements IdAssignable, CsvConvertible {
             getDescription()
         };
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

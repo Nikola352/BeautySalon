@@ -65,7 +65,7 @@ public class CosmeticTreatment implements IdAssignable, CsvConvertible {
         if(obj == null) return false;
         if(!(obj instanceof CosmeticTreatment)) return false;
         CosmeticTreatment cosmeticTreatment = (CosmeticTreatment) obj;
-        return this.getTreatmentType().equals(cosmeticTreatment.getTreatmentType());
+        return this.id == cosmeticTreatment.id;
     }
 
     public static CosmeticTreatment parseFromCsv(String[] line, TreatmentType treatmentType) {
@@ -84,5 +84,10 @@ public class CosmeticTreatment implements IdAssignable, CsvConvertible {
             Integer.toString(getTreatmentType().getId()),
             Integer.toString(getDuration())
         };
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%s (%d min)", getName(), getDuration());
     }
 }
