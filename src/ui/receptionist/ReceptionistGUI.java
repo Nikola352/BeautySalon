@@ -197,6 +197,8 @@ public class ReceptionistGUI extends GUI {
         statusComboBox.addItem(AppointmentStatus.SCHEDULED);
         statusComboBox.addItem(AppointmentStatus.COMPLETED);
         statusComboBox.addItem(AppointmentStatus.NOT_SHOWED_UP);
+        statusComboBox.addItem(AppointmentStatus.CANCELED_BY_CLIENT);
+        statusComboBox.addItem(AppointmentStatus.CANCELED_BY_SALON);
     }
 
     private void setupLayout() {
