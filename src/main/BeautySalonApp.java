@@ -7,7 +7,7 @@ import ui.login.LoginGUI;
 import ui.login.LogoutCallback;
 
 public class BeautySalonApp implements LoginCallback, LogoutCallback {
-    ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
+    private ServiceRegistry serviceRegistry = ServiceRegistry.getInstance();
 
     public BeautySalonApp() {
         serviceRegistry.loadData();
@@ -26,11 +26,6 @@ public class BeautySalonApp implements LoginCallback, LogoutCallback {
     @Override
     public void onLogout() {
         login();
-    }
-
-    public void exit(){
-        System.out.println("Bye!");
-        serviceRegistry.saveData();
     }
 
 	public static void main(String[] args) {
