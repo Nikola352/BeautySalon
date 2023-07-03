@@ -82,6 +82,17 @@ public class AppointmentService extends Service<Appointment> {
         return result;
     }
 
+    public ArrayList<Appointment> getByCosmetologistAndStatus(Cosmetologist cosmetologist, AppointmentStatus status){
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
+        ArrayList<Appointment> result = new ArrayList<Appointment>();
+        for(Appointment appointment : appointments){
+            if(appointment.getCosmetologist().equals(cosmetologist) && appointment.getStatus().equals(status)){
+                result.add(appointment);
+            }
+        }
+        return result;
+    }
+
     public ArrayList<Appointment> getByClient(Client client){
         ArrayList<Appointment> appointments = new ArrayList<Appointment>(getData());
         ArrayList<Appointment> result = new ArrayList<Appointment>();
