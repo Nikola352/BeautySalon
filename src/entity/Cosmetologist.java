@@ -68,7 +68,7 @@ public class Cosmetologist extends Employee {
         for(int hour = openingHour; hour < closingHour; hour++){
             boolean isFree = true;
             for (Integer[] appointment : timetable) {
-                if (hour >= appointment[0] && hour < appointment[0] + appointment[1] / 60){
+                if (hour >= appointment[0] && hour < appointment[0] + appointment[1] / 60.0){
                     isFree = false;
                     break;
                 } else if (hour + treatmentDuration > appointment[0] && hour + treatmentDuration <= appointment[0] + appointment[1] / 60){
