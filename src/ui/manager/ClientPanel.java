@@ -281,6 +281,10 @@ public class ClientPanel extends JPanel {
                     clientToEdit.setPhoneNum(phoneNum);
                     clientToEdit.setAddress(address);
                 } else {
+                    if(usernameTaken(username)){
+                        JOptionPane.showMessageDialog(ClientPanel.this, "Korisničko ime je zauzeto!", "Greška", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     clientService.add(username, password, name, lastname, gender, phoneNum, address);
                 }
                 table.setModel(new ClientTableModel(clientService.getData()));
@@ -310,29 +314,25 @@ public class ClientPanel extends JPanel {
         });
     }
 
-    private boolean validateInput(String username, String password, String firstName, String lastName, String gender, String phoneNumber, String address){
-        if(username.trim().isEmpty()){
-            JOptionPane.showMessageDialog(ClientPanel.this, "Korisničko ime je obavezno.", "Greška", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
+    private boolean usernameTaken(String username){
         if(clientService.getByUsername(username) != null){
-            JOptionPane.showMessageDialog(ClientPanel.this, "Korisničko ime je zauzeto.", "Greška", JOptionPane.ERROR_MESSAGE);
-            return false;
+            return true;
         }
 
         if(serviceRegistry.getManagerService().getByUsername(username) != null){
-            JOptionPane.showMessageDialog(ClientPanel.this, "Korisničko ime je zauzeto.", "Greška", JOptionPane.ERROR_MESSAGE);
-            return false;
+            return true;
         }
 
         if(serviceRegistry.getCosmetologistService().getByUsername(username) != null){
-            JOptionPane.showMessageDialog(ClientPanel.this, "Korisničko ime je zauzeto.", "Greška", JOptionPane.ERROR_MESSAGE);
-            return false;
+            return true;
         }
 
-        if(serviceRegistry.getReceptionistService().getByUsername(username) != null){
-            JOptionPane.showMessageDialog(ClientPanel.this, "Korisničko ime je zauzeto.", "Greška", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    private boolean validateInput(String username, String password, String firstName, String lastName, String gender, String phoneNumber, String address){
+        if(username.trim().isEmpty()){
+            JOptionPane.showMessageDialog(ClientPanel.this, "Korisničko ime je obavezno.", "Greška", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
