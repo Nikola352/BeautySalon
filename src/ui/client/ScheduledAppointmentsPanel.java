@@ -76,6 +76,7 @@ public class ScheduledAppointmentsPanel extends JPanel {
                 Appointment appointment = ((AppointmentTableModel) table.getModel()).getAppointment(selectedRow);
                 appointmentService.cancel(appointment, user);
                 ((AppointmentTableModel) table.getModel()).removeAppointment(selectedRow);
+                appointmentService.saveData();
                 JOptionPane.showMessageDialog(null, "Uspješno ste otkazali tretman", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
                 parent.updateTables();
                 if(table.getRowCount() == 0){
