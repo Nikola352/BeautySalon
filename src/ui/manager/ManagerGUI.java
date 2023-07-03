@@ -11,6 +11,7 @@ public class ManagerGUI extends GUI {
 
     private JTabbedPane tabbedPane;
     private SalonPanel salonPanel;
+    private TreatmentTypePanel treatmentTypePanel;
     private CosmeticTreatmentPanel cosmeticTreatmentPanel;
     private AppointmentPanel appointmentPanel;
     private EmployeePanel employeePanel;
@@ -28,6 +29,7 @@ public class ManagerGUI extends GUI {
     private void initializeComponents() {
         tabbedPane = new JTabbedPane();
         salonPanel = new SalonPanel(user);
+        treatmentTypePanel = new TreatmentTypePanel(user);
         cosmeticTreatmentPanel = new CosmeticTreatmentPanel(user);
         appointmentPanel = new AppointmentPanel(user);
         employeePanel = new EmployeePanel(user);
@@ -36,6 +38,7 @@ public class ManagerGUI extends GUI {
 
     private void setupLayout() {
         tabbedPane.addTab("Salon", salonPanel);
+        tabbedPane.addTab("Tipovi tretmana", treatmentTypePanel);
         tabbedPane.addTab("Kozmetički tretmani", cosmeticTreatmentPanel);
         tabbedPane.addTab("Zakazani tretmani", appointmentPanel);
         tabbedPane.addTab("Zaposleni", employeePanel);

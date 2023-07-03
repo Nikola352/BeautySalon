@@ -41,4 +41,23 @@ public class TreatmentTypeTableModel extends AbstractTableModel {
                 return null;
         }
     }
+
+    public void setTreatmentTypes(ArrayList<TreatmentType> treatmentTypes) {
+        this.treatmentTypes = treatmentTypes;
+        fireTableDataChanged();
+    }
+
+    public TreatmentType getTreatmentType(int rowIndex) {
+        return treatmentTypes.get(rowIndex);
+    }
+
+    public void addTreatmentType(TreatmentType treatmentType) {
+        treatmentTypes.add(treatmentType);
+        fireTableDataChanged();
+    }
+
+    public void removeTreatmentType(int rowIndex) {
+        treatmentTypes.remove(rowIndex);
+        fireTableDataChanged();
+    }
 }
