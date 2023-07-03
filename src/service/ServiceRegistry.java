@@ -58,7 +58,7 @@ public class ServiceRegistry {
         return appointmentService;
     }
 
-    public void loadData(){
+    public void initializeServices(){
         if(priceListService == null)
         priceListService = new PriceListService();
         if(treatmentTypeService == null)
@@ -77,7 +77,10 @@ public class ServiceRegistry {
             beautySalonService = new BeautySalonService();
         if(appointmentService == null)
             appointmentService = new AppointmentService();
+    }
 
+    public void loadData(){
+        initializeServices();
         treatmentTypeService.loadData();
         cosmeticTreatmentService.loadData();
         priceListService.loadPriceList();

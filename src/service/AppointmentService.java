@@ -30,8 +30,8 @@ public class AppointmentService extends Service<Appointment> {
         priceListService = serviceRegistry.getPriceListService();
     }
 
-    public Appointment add(CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate data, LocalTime time, double price, AppointmentStatus status){
-        Appointment appointment = new Appointment(getNextId(), cosmeticTreatment, cosmetologist, client, data, time, price, status);
+    public Appointment add(CosmeticTreatment cosmeticTreatment, Cosmetologist cosmetologist, Client client, LocalDate date, LocalTime time, double price, AppointmentStatus status){
+        Appointment appointment = new Appointment(getNextId(), cosmeticTreatment, cosmetologist, client, date, time, price, status);
         add(appointment);
         incrementNextId();
         return appointment;
