@@ -1,10 +1,10 @@
-1;nikola;test123;Nikola;Jolovic;MALE;066 903 876;Vidovdanska 42, Bijeljina;0.0;false
-2;jana;jana123;Jana;Petrovic;FEMALE;065 432 123;Kralja Petra 55, Beograd;200.0;true
-3;milos;milospass;Milos;Stojanovic;MALE;063 456 789;Kralja Milana 22, Novi Sad;50.0;false
+1;n;n;Nikola;Jolovic;MALE;066 903 876;Vidovdanska 42, Bijeljina;24186.998;true
+2;jana;jana123;Jana;Petrovic;FEMALE;065 432 123;Kralja Petra 55, Beograd;-3800.0;false
+3;milos123;milos1234;Milos;Stojanovic;MALE;063456789;Kralja Milana 22, Novi Sad;10300.0;true
 4;ana;ana321;Ana;Markovic;FEMALE;064 123 456;Bulevar Kralja Aleksandra 87, Beograd;150.0;true
-5;jovan;jovanpass;Jovan;Nikolic;MALE;066 789 123;Narodnog fronta 15, Nis;80.0;false
+5;jovan;jovanpass;Jovan;Nikolic;MALE;066 789 123;Narodnog fronta 15, Nis;-2920.0;false
 6;maja;maja123;Maja;Jankovic;FEMALE;065 987 654;Djordja Stanojevica 11, Novi Beograd;300.0;true
-7;marko;markopass;Marko;Pavlovic;MALE;062 345 678;Gandijeva 99, Beograd;100.0;false
+7;marko;markopass;Marko;Pavlovic;MALE;062 345 678;Gandijeva 99, Beograd;100.0;true
 8;olja;olja123;Olja;Vukovic;FEMALE;065 234 567;Nikole Tesle 3, Kragujevac;400.0;true
 9;petar;petarpass;Petar;Lazic;MALE;066 321 654;Knez Mihajlova 12, Beograd;30.0;false
 10;jelena;jelenapass;Jelena;Kovacevic;FEMALE;064 789 321;Kralja Petra 35, Novi Sad;250.0;true
